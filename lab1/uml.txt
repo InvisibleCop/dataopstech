@@ -1,0 +1,71 @@
+﻿@startuml
+
+entity Category {
+* CategoryID: int
+--
+CategoryName: varchar(50)
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+entity Customer {
+* CustomerID: int
+--
+CustomerFirstName: varchar(50)
+CustomerLastName: varchar(50)
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+entity Product {
+* ProductID: int
+--
+ProductName: varchar(50)
+ProductPrice: int
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+entity ProductCategory {
+* ProductCategoryID: int
+--
+CategoryID: int
+ProductID: int
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+entity Receipt {
+* ReceiptID: int
+--
+CustomerID: int
+TotalPrice: int
+CompletedDate: datetime
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+entity ReceiptItem {
+* ReceiptItemID: int
+--
+ReceiptID: int
+ProductID: int
+ActualPrice: int
+Amount: int
+--
+ROWguid: UUID
+ModifiedDate: datetime
+}
+
+Category ||--o{ ProductCategory
+Product ||--o{ ProductCategory
+Customer ||--o{ Receipt
+Product ||--o{ ReceiptItem
+Receipt ||--|{ ReceiptItem
+
+@enduml

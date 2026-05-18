@@ -1,0 +1,106 @@
+﻿@startuml
+
+entity Category {
+* CategoryID: int
+--
+CategoryName: varchar(50)
+StoreCategoryID: int
+StoreID: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity Customer {
+* CustomerID: int
+--
+CustomerFirstName: varchar(50)
+CustomerLastName: varchar(50)
+StoreCustomerID: int
+StoreID: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity Product {
+* ProductID: int
+--
+ProductName: varchar(50)
+StoreProductID: int
+StoreID: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity ProductCategory {
+* ProductCategoryID: int
+--
+CategoryID: int
+ProductID: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity Receipt {
+* ReceiptID: int
+--
+TotalPrice: int
+CompletedDate: datetime
+StoreReceiptID: int
+StoreID: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity StoreInfo {
+* StoreID: int
+--
+StoreName: varchar(50)
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity Date {
+DateID: int
+--
+Day: int
+Month: int
+Year: int
+Weekday: int
+MonthName: varchar(50)
+WeekdayName: varchar(50)
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity SoldItem {
+* SoldItemID: int
+--
+ReceiptID: int
+ProductID: int
+CustomerID: int
+StoreID: int
+DateID: int
+ListedPrice: int
+ActualPrice: int
+Amount: int
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+Customer ||--o{ SoldItem
+Product ||--o{ SoldItem
+Receipt ||--|{ SoldItem
+StoreInfo ||--o{ SoldItem
+Date ||--o{ SoldItem
+Category ||--o{ ProductCategory
+Product ||--o{ ProductCategory
+
+@enduml

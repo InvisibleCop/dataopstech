@@ -1,0 +1,17 @@
+﻿services:
+  postgres-west:
+    image: postgres
+    container_name: postgres-west
+    hostname: postgres-west
+    restart: always
+    environment:
+      POSTGRES_DB: west_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata-west:/var/lib/postgresql/data
+    ports:
+      - "5446:5432"
+
+volumes:
+  pgdata-west:

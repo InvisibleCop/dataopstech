@@ -1,0 +1,96 @@
+CREATE TABLE IF NOT EXISTS StoreInfo (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    StoreID INTEGER PRIMARY KEY,
+    StoreName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Category (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    CategoryID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    CategoryName VARCHAR(50) NOT NULL,
+    StoreCategoryID INTEGER NOT NULL,
+    StoreID INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Customer (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    CustomerID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    StoreCustomerID INTEGER NOT NULL,
+    StoreID INTEGER NOT NULL,
+    CustomerFirstName VARCHAR(50) NOT NULL,
+    CustomerLastName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Product (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    ProductID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    ProductName VARCHAR(50) NOT NULL,
+    StoreProductID INTEGER NOT NULL,
+    StoreListedPrice INTEGER NOT NULL,
+    StoreID INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ProductCategory (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    ProductCategoryID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    CategoryID INTEGER NOT NULL,
+    ProductID INTEGER NOT NULL,
+
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+);
+
+CREATE TABLE IF NOT EXISTS Receipt (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    ReceiptID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    StoreReceiptID INTEGER NOT NULL,
+    StoreID INTEGER NOT NULL,
+    TotalPrice INTEGER NOT NULL,
+    CompletedDate TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Date (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    DateID INTEGER PRIMARY KEY,
+    Day INTEGER NOT NULL,
+    Month INTEGER NOT NULL,
+    Year INTEGER NOT NULL,
+    Weekday INTEGER NOT NULL,
+    MonthName VARCHAR(50) NOT NULL,
+    WeekdayName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS SoldItem (
+    ROWguid UUID DEFAULT gen_random_uuid(),
+    AddedDate TIMESTAMP DEFAULT now(),
+
+    SoldItemID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    ReceiptID INTEGER NOT NULL,
+    CustomerID INTEGER NOT NULL,
+    ProductID INTEGER NOT NULL,
+    StoreID INTEGER NOT NULL,
+    DateID INTEGER NOT NULL,
+    ListedPrice INTEGER NOT NULL,
+    ActualPrice INTEGER NOT NULL,
+    Amount INTEGER NOT NULL,
+
+    FOREIGN KEY (ReceiptID) REFERENCES Receipt(ReceiptID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+    FOREIGN KEY (StoreID) REFERENCES StoreInfo(StoreID),
+    FOREIGN KEY (DateID) REFERENCES Date(DateID)
+);

@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS WeeklyStoreReport;
+
+DROP TABLE IF EXISTS FiscalWeek;

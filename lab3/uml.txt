@@ -1,0 +1,27 @@
+﻿@startuml
+
+entity FiscalWeek {
+* WeekID: int
+--
+BeginDate: datetime
+EndDate: datetime
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+entity WeeklyStoreReport {
+* ReportID: int
+--
+WeekID: int
+Revenue: int
+ListedPriceSum: int
+StoreName: varchar(50)
+--
+ROWguid: UUID
+AddedDate: datetime
+}
+
+FiscalWeek ||--o{ WeeklyStoreReport
+
+@enduml

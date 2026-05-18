@@ -1,0 +1,16 @@
+﻿services:
+  postgres-east:
+    image: postgres
+    container_name: postgres-east
+    restart: always
+    environment:
+      POSTGRES_DB: east_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata-east:/var/lib/postgresql/data
+    ports:
+      - "5447:5432"
+
+volumes:
+  pgdata-east:

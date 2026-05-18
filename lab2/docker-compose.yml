@@ -1,0 +1,16 @@
+﻿services:
+  postgres-warehouse:
+    image: postgres
+    container_name: postgres-warehouse
+    restart: always
+    environment:
+      POSTGRES_DB: warehouse_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata-warehouse:/var/lib/postgresql/data
+    ports:
+      - "5448:5432"
+
+volumes:
+  pgdata-warehouse:
